@@ -8,6 +8,7 @@
 # * https://towardsdatascience.com/recurrent-neural-networks-by-example-in-python-ffd204f99470
 # * https://towardsdatascience.com/choosing-the-right-hyperparameters-for-a-simple-lstm-using-keras-f8e9ed76f046
 # Library for manipulating, formatting, and cleaning the data
+import sys
 import os
 import pandas as pd
 import numpy as np
@@ -26,8 +27,8 @@ def processData(data,lb):
 
 def main():
     # Need to read data from Joseph's database
-
-    companyCode = 'MMM'
+    print ("Current Company Code: " + str(sys.argv[1]))
+    companyCode = str(sys.argv[1])
 
     data = pd.read_csv('./input/all_stocks_5yr.csv')
     closeData = data[data['Name']== companyCode].close
@@ -67,13 +68,17 @@ def main():
 
     # Export model of company to modelBin
     try:
+        os.mkdir('./modelBin/')
+    except:
+        pass
+    try:
         os.mkdir('./modelBin/' + companyCode)
     except:
         pass
     model_json = model.to_json()
     with open('./modelBin/' + companyCode + '/model.json','w+') as json_file:
         json_file.write(model_json)
-    model.save_weights("./modelBin/MMM/model.h5")
+    model.save_weights('./modelBin/' + companyCode + '/model.h5')
 
 if __name__ == '__main__':
     main()
