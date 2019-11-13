@@ -61,7 +61,7 @@ def main():
     pred = []
     for i in range(250):
         Xt = model.predict(X_test[i].reshape(1,7,1))
-        print('predicted:{0}, actual:{1}'.format(scl.inverse_transform(Xt),scl.inverse_transform(y_test[i].reshape(-1,1))))
+        # print('predicted:{0}, actual:{1}'.format(scl.inverse_transform(Xt),scl.inverse_transform(y_test[i].reshape(-1,1))))
         pred.append(scl.inverse_transform(Xt))
         act.append(scl.inverse_transform(y_test[i].reshape(-1,1)))
     result_df = pd.DataFrame({'pred':list(np.reshape(pred, (-1))),'act':list(np.reshape(act, (-1)))})
